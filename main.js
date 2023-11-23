@@ -1,11 +1,20 @@
 // console.log(document)
+const DIRECTIONS ={
+    down : "down",
+    right : "right",
+    left : "left",
+    up : "up",
+}
+
+const STEPS = 15;
+const INITIAL_POSITION = 0;
 
 const playingField = document.getElementById("playing-field")
 
-const down = document.getElementById("down")
-const right = document.getElementById("right")
-const left = document.getElementById("left")
-const up = document.getElementById("up")
+const downBtn = document.getElementById(DIRECTIONS.down)
+const rightBtn = document.getElementById(DIRECTIONS.right)
+const leftBtn = document.getElementById(DIRECTIONS.left)
+const upBtn = document.getElementById(DIRECTIONS.up)
 
 const ball = document.getElementById("ball")
 
@@ -13,23 +22,25 @@ playingField.style.backgroundColor = "blue"
 ball.style.backgroundColor = "yellow"
 
 
-const moveRight = function(){
-    ball.style.left = `${parseInt(ball.style.left  || 0)  + 15 }px`
-   }
-const moveUp = function(){
-    ball.style.top = `${parseInt(ball.style.top  || 0)  - 15 }px`
-   }
-const moveDown = function(){
-    ball.style.top = `${parseInt(ball.style.top  || 0)  + 15 }px`
-   }
-const moveLeft = function(){
-    ball.style.left  = `${parseInt(ball.style.left   || 0)  - 15 }px`
-   }
+const DIRECTIONS_STEPS ={
+left: { axis:"left" , modifiers:1},
+right: { axis:"left" , modifiers:-1},
+down: { axis:"top" , modifiers:-1},
+up: { axis:"top" , modifiers:1},
+asaad: { axis:"left" , modifiers:3},
+}
 
-right.onclick = moveRight
-up.onclick = moveUp
-left.onclick = moveLeft
-down.onclick = moveDown
+const moveBall = (directionObj)=> {
+ball.style[directionObj.axis] = `${parseInt(ball.style[directionObj.axis]   || INITIAL_POSITION )  + (directionObj.modifiers*STEPS) }px`
+}
+
+
+moveBall(DIRECTIONS_STEPS.right)
+
+rightBtn.addEventListener("click",()=>moveBall(DIRECTIONS_STEPS.right)) 
+upBtn.onclick = () => moveBall(DIRECTIONS_STEPS.up)
+leftBtn.onclick = () => moveBall(DIRECTIONS_STEPS.left)
+downBtn.onclick = () => moveBall(DIRECTIONS_STEPS.down)
 
 const header = document.createElement("h1")
 header.innerHTML = "The Best Game Ever"
